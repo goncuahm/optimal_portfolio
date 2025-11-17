@@ -21,7 +21,7 @@ assets = {
 }
 ticker_fx = "TRY=X"  # USD/TRY
 
-period = "6y"
+period = "2y"
 
 st.subheader("Downloading price data...")
 
@@ -123,7 +123,7 @@ def portfolio_metrics(weights):
     return port_return, port_vol, sharpe
 
 # Generate random portfolios
-num_portfolios = 30000
+num_portfolios = 10000
 results = np.zeros((3, num_portfolios))
 weights_record = []
 
