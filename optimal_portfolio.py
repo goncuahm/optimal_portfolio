@@ -129,7 +129,9 @@ cov_ext.loc["RF"] = 0.0
 st.subheader("Optimization & Efficient Frontier")
 
 # Monte Carlo scatter for visualization
-num_rand = st.sidebar.slider("Monte Carlo portfolios", 5000, 1000, 20000, step=1000)
+# num_rand = st.sidebar.slider("Monte Carlo portfolios", 5000, 1000, 20000, step=1000)
+# Fixed number of Monte Carlo portfolios
+num_rand = 10000
 res_mc = np.zeros((3, num_rand))
 w_list = []
 for i in range(num_rand):
