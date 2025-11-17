@@ -92,12 +92,16 @@ st.pyplot(fig)
 # USER-EDITABLE EXPECTED RETURNS (annual, %) - Streamlit only
 # -------------------------
 st.subheader("Expected annual returns (user inputs)")
-st.write("If you leave them unchanged, historical annual returns from the 1-year window will be used.")
+st.write("If you leave them unchanged, defaults equal 1-year total returns (%)")
+
+# Use 1-year total return (P_end/P_start -1)*100 as default
+returns_1y_pct = (prices.iloc[-1] / prices.iloc[0] - 1) * 100
+
 user_expected = {}
 assets = list(prices.columns)
 col_inputs = st.columns(len(assets))
 for i, asset in enumerate(assets):
-    default_val = float((daily_returns.mean()[asset] * TRADING_DAYS * 100).round(2))
+    default_val = float(returns_1y_pct[asset].round(2))
     user_expected[asset] = col_inputs[i].number_input(f"{asset} (%)", value=default_val, step=0.1)
 
 # Risk-free
