@@ -18,7 +18,11 @@ tick_gold = "IAU"
 tick_silver = "SLV"
 tick_spy = "SPY"
 tick_fx = "TRY=X"
-period = st.sidebar.selectbox("Download period", options=["2y", "3y", "5y"], index=1)
+# -------------------------
+# FIXED DOWNLOAD PERIOD
+# -------------------------
+period = "3y"  # fixed 3-year download period to ensure full 1-year analysis
+# period = st.sidebar.selectbox("Download period", options=["2y", "3y", "5y"], index=1)
 TRADING_DAYS = 252
 
 # default RF
