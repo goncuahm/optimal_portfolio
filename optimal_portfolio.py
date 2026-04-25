@@ -107,11 +107,11 @@ hist_table = pd.DataFrame({
     "Return 1y (%)": returns_1y_pct.round(2),
     f"Return {download_period} (%)": returns_full.round(2),
     "Vol 1y (%)": annual_vol_1y.round(2),
-    "Upward Vol 1y (%)": upward_vol_1y.round(2),
-    "Downward Vol 1y (%)": downward_vol_1y.round(2),
+    "Up Vol 1y (%)": upward_vol_1y.round(2),
+    "Dn Vol 1y (%)": downward_vol_1y.round(2),
     f"Vol {download_period} (%)": annual_vol_full.round(2),
-    f"Upward Vol {download_period} (%)": upward_vol_full.round(2),
-    f"Downward Vol {download_period} (%)": downward_vol_full.round(2)
+    f"Up Vol {download_period} (%)": upward_vol_full.round(2),
+    f"Dn Vol {download_period} (%)": downward_vol_full.round(2)
 })
 st.dataframe(hist_table)
 
@@ -265,7 +265,6 @@ ax3.legend()
 st.pyplot(fig3)
 
 st.success("Optimization complete. Change expected returns, RF, or download period to recompute.")
-
 
 
 # # app_updated.py
