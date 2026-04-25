@@ -84,20 +84,28 @@ corr = daily_returns.tail(TRADING_DAYS).corr()
 # -------------------------
 # UPWARD AND DOWNWARD VOLATILITY CALCULATIONS
 # -------------------------
-# 1Y upward/downward volatility
+# 1Y upward/downward volatility (semi-volatility approach)
 daily_returns_1y = daily_returns.tail(TRADING_DAYS)
 upward_returns_1y = daily_returns_1y[daily_returns_1y > 0]
 downward_returns_1y = daily_returns_1y[daily_returns_1y < 0]
 
-upward_vol_1y = upward_returns_1y.std() * np.sqrt(TRADING_DAYS) * 100
-downward_vol_1y = downward_returns_1y.std() * np.sqrt(TRADING_DAYS) * 100
+# Calculate semi-variance (variance of only up/down returns)
+upward_semivar_1y = (upward_returns_1y ** 2).mean()
+downward_semivar_1y = (downward_returns_1y ** 2).mean()
+
+# Annualize semi-volatility
+upward_vol_1y = np.sqrt(upward_semivar_1y * TRADING_DAYS) * 100
+downward_vol_1y = np.sqrt(downward_semivar_1y * TRADING_DAYS) * 100
 
 # Full period upward/downward volatility
 upward_returns_full = daily_returns[daily_returns > 0]
 downward_returns_full = daily_returns[daily_returns < 0]
 
-upward_vol_full = upward_returns_full.std() * np.sqrt(TRADING_DAYS) * 100
-downward_vol_full = downward_returns_full.std() * np.sqrt(TRADING_DAYS) * 100
+upward_semivar_full = (upward_returns_full ** 2).mean()
+downward_semivar_full = (downward_returns_full ** 2).mean()
+
+upward_vol_full = np.sqrt(upward_semivar_full * TRADING_DAYS) * 100
+downward_vol_full = np.sqrt(downward_semivar_full * TRADING_DAYS) * 100
 
 # -------------------------
 # DISPLAY HISTORICAL RETURNS & VOLATILITY
@@ -265,7 +273,6 @@ ax3.legend()
 st.pyplot(fig3)
 
 st.success("Optimization complete. Change expected returns, RF, or download period to recompute.")
-
 
 # # app_updated.py
 # import streamlit as st
