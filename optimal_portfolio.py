@@ -234,7 +234,7 @@ cbar = plt.colorbar(sc, ax=ax)
 cbar.set_label("Sharpe")
 ax.plot(frontier_vols, target_returns, color='red', lw=2, label="Efficient frontier")
 for i, name in enumerate(mu_ext.index):
-    vol_i = np.sqrt(cov_ext.value[i,i])
+    vol_i = np.sqrt(cov_ext.values[i,i])
     ret_i = mu_ext.values[i]
     ax.scatter(vol_i, ret_i, marker='o', s=80)
     ax.text(vol_i, ret_i, "  "+name)
@@ -273,6 +273,9 @@ ax3.legend()
 st.pyplot(fig3)
 
 st.success("Optimization complete. Change expected returns, RF, or download period to recompute.")
+
+
+
 
 # # app_updated.py
 # import streamlit as st
