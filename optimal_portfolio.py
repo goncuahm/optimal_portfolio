@@ -33,14 +33,20 @@ download_period = st.sidebar.selectbox("Download period (historical data)", opti
 # -------------------------
 st.write(f"Downloading adjusted prices and FX for {download_period}...")
 symbols = [tick_index, tick_gold, tick_silver, tick_spy, tick_fx]
-df_raw = yf.download(symbols, period=download_period, auto_adjust=True, progress=False)["Close"]
-df_raw = df_raw.rename(columns={
-    tick_index: "BIST30",
-    tick_gold: "GoldUSD",
-    tick_silver: "SilverUSD",
-    tick_spy: "SPYUSD",
-    tick_fx: "USDTRY"
-}).dropna(how="any")
+
+try:
+    df_raw = yf.download(symbols, period=download_period, auto_adjust=True, progress=False, threads=False)["Close"]
+    df_raw = df_raw.rename(columns={
+        tick_index: "BIST30",
+        tick_gold: "GoldUSD",
+        tick_silver: "SilverUSD",
+        tick_spy: "SPYUSD",
+        tick_fx: "USDTRY"
+    }).dropna(how="any")
+except Exception as e:
+    st.error(f"Error downloading data from yfinance: {str(e)}")
+    st.info("This may be a temporary network issue. Please refresh the page or try again in a few moments.")
+    st.stop()
 
 # Convert USD assets to TRY immediately
 df_try = pd.DataFrame(index=df_raw.index)
@@ -273,8 +279,6 @@ ax3.legend()
 st.pyplot(fig3)
 
 st.success("Optimization complete. Change expected returns, RF, or download period to recompute.")
-
-
 
 
 # # app_updated.py
